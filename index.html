@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            {{contador}}
+            <button v-on:click="(contador++)">Click</button>
+            <button @mouseover="(contador++)">sobre click</button>
+        </div>
+        
+    </div>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        //@click,@mouseout,@mouseover
+        const programa ={
+            data(){
+                return{
+                 
+                    usuarios: [],
+                    contador:0
+                 
+                }
+            },
+            mounted(){
+               this.getData(); 
+            },
+            methods:{
+                getData(){
+                    fetch('https://jsonplaceholder.typicode.com/users')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.usuarios = data;
+                     
+                    })
+                }
+            }
+        }
+        var programa2 = Vue.createApp(programa).mount('#app')
+    </script>
+</body>
+</html>

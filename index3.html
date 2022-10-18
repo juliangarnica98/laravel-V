@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <table class="table stripped bordered">
+                <thead>
+                    <tr>
+                        <th>nombre</th>
+                        <th>usuario</th>
+                        <th>correo</th>
+                        <th>direccion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="usuario in par_users">
+                        <td>{{usuario.name}}</td>
+                        <td>{{usuario.username}}</td>
+                        <td>{{usuario.email}}</td>
+                        <td>
+                            <ul>
+                                <li>Ciudad: {{usuario.address.city}}</li>
+                                <li>Calle: {{usuario.address.street}}</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h5 v-if="(numero_1>numero_2)">
+            el numero {{numero_1}} es mayor que {{numero_2}}
+        </h5>
+        <h5 v-else-if="(numero_1==numero_2)"> Son iguales</h5>
+    </div>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        //v-id,v-else, v-else-if, v-show
+        const programa ={
+            data(){
+                return{
+                    //nombre:'',
+                    usuarios: [],
+                    par_users:[]
+                    // numero_1:5,
+                    // numero_2:5
+                }
+            },
+            mounted(){
+               this.getData(); 
+            },
+            methods:{
+                getData(){
+                    fetch('https://jsonplaceholder.typicode.com/users')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.usuarios = data;
+                        this.par_users = data.filter(x=>(x.id%2==0))
+                    })
+                }
+            }
+        }
+        var programa2 = Vue.createApp(programa).mount('#app')
+    </script>
+</body>
+</html>

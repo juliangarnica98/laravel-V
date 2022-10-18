@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <label v-bind:title="titulo" for="">Titulo dinamico</label> <br>
+        
+        Hola {{nombre}} <br>
+        Año {{anio}} <br>
+        Mes {{meses[2]}} <br>
+        Contador {{contador}} <br>
+
+        <button type="button" v-on:click="stop">{{btnMessage}}</button>
+        <hr>
+        
+        <button type="button" v-on:click="view('make.jpg')">Make</button>
+        <button type="button" v-on:click="view('cara.jpg')">Meme</button>
+        <hr>
+        <img v-bind:src="imagen" height=100><br>
+        <hr>
+        <label for="">Escribe tu apellido</label>
+        <input type="text" v-model="apellido">
+        <hr>
+        <h5>{{apellido}}</h5>
+        <hr>
+        <select v-model="frutas" name="" id="">
+            <option value="Pera">Pera</option>
+            <option value="Manzana">Manzana</option>
+            <option value="Uva">Uva</option>
+        </select>
+        Fruta selecionada: {{frutas}} <hr>
+        <ul>
+            <li v-for="juego in juegos" v-bind:key="juegos">{{juego}}</li>
+        </ul>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        //data, metodos, props, mounted, created, computed, watch, destroyed
+        //v-for
+        const holaMundo = {
+            data(){
+                return{
+                    nombre:'Julian', 
+                    apellido:'',
+                    anio: 2022,
+                    meses: ['Enero','Febrero','Octubre'],
+                    contador:0,
+                    interval: null,
+                    isRunning: false,
+                    btnMessage:'Detener',
+                    titulo:'Dinamico',
+                    imagen:'cara.jpg' ,
+                    frutas: '',
+                    juegos:['futbol','basquet','ajedrez']
+                }
+            },
+            mounted(){
+
+                this.interval= setInterval(()=> {
+                    this.contador ++;
+                },1000);
+                this.isRunning = true
+            },
+            methods:{
+                stop(){
+                    if(this.isRunning){
+                        clearInterval(this.interval)
+                        this.btnMessage ='Continuar';
+                        this.isRunning =false;
+                    }else{
+                        this.interval= setInterval(()=> {
+                            this.contador ++;
+                        },1000);
+                        this.btnMessage ='Detener';
+                        this.isRunning = true
+                    }
+                
+                },
+                view(imagen){
+                    this.imagen = imagen
+                }         
+            }
+        }
+
+        var mounted = Vue.createApp(holaMundo).mount('#app')
+    </script>
+</body>
+</html>
